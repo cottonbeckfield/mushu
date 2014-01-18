@@ -1,7 +1,8 @@
 ########################################################
 #### Python IRC Bot
 #### Created by Courtney Cotton on 1/17/14
-#### 
+#### Utilized Shellium (http://wiki.shellium.org/) for 
+#### support.
 #######################################################
 
 #######################################################
@@ -78,16 +79,16 @@ time.sleep(3)
 # Join Channel
 joinchan(channel) 
 
-while 1: # Be careful with these! it might send you to an infinite loop
-  ircmsg = ircsock.recv(2048) # receive data from the server
-  ircmsg = ircmsg.strip('\n\r') # removing any unnecessary linebreaks.
-  print(ircmsg) # Here we print what's coming from the server
+while 1: 
+  ircmsg = ircsock.recv(2048) 
+  ircmsg = ircmsg.strip('\n\r') 
   if ircmsg.find(' PRIVMSG ')!=-1:
      nick=ircmsg.split('!')[0][1:]
      channel=ircmsg.split(' PRIVMSG ')[-1].split(' :')[0]
      commands(nick,channel,ircmsg)
-  if ircmsg.find(":Hello "+ botnick) != -1: # If we can find "Hello Euthumeo" it will call the function hello()
+  if ircmsg.find(":Hello "+ botnick) != -1:
     hello()
 
-  if ircmsg.find("PING :") != -1: # if the server pings us then we've got to respond!
+# Responds if server pings. Keeps session active.
+  if ircmsg.find("PING :") != -1: 
     ping()

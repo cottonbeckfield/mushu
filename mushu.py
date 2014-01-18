@@ -5,6 +5,16 @@
 #### support.
 #######################################################
 
+### 
+# TODO
+# Add Logging
+# Add Weather
+# Add Google Search
+# Add Wiki
+# Add a Game (IDK WHICH)
+# Put FoxList/Compliments in a class in another file and import them FOR LEARNINGS!1!@
+
+
 #######################################################
 ### Libraries
 #######################################################
@@ -13,9 +23,7 @@ import socket
 import string
 import sys
 import time
-from datetime import date
 from random import choice
-import compliments
 
 #######################################################
 ### VARIABLES
@@ -42,8 +50,8 @@ comList = [' :You are a wonderful person.\r\n',
             ' :If it was a Zombie Apocalypse and I was a Zombie, I would eat you first.\r\n', 
             ' :Hey Albert Einste--wait! Nevermind! You are far more brilliant!\r\n', 
             ' :You are brilliant.\r\n',
-            ' :You smell better than a field full of flowers.',
-            ' :My only regret is that I cannot be you.']
+            ' :You smell better than a field full of flowers.\r\n',
+            ' :My only regret is that I cannot be you.\r\n']
 
 #######################################################
 ### FUNCTIONS

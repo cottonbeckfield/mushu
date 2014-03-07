@@ -1,7 +1,7 @@
 ########################################################
 #### Python IRC Bot
 #### Created by Courtney Cotton on 1/17/14
-#### 
+#### Updated 3-7-2014
 #######################################################
 
 #######################################################
@@ -20,14 +20,14 @@ from random import choice
 # Some basic variables used to configure the bot        
 server = "chat.freenode.net" # Server
 port = 6667
-botnick = "mushu" # Your bots nick
+botnick = "Mushu" # Your bots nick
 debug = False
 # Debug Mode, Toggle true or false. 
 # Determines connection to channel based on debug variable.
 if debug == True:
-  channel = '#aplacefortesting'
+  channel = '#randomtestplace'
 elif debug == False:
-  channel = '#therealchanneliwant'
+  channel = '#whereireallywanttobe'
 
 #######################################################
 ### FUNCTIONS
@@ -50,11 +50,13 @@ def commands(nick,channel,message):
     rComList = random.choice(open('files/compliments.txt').readlines())
     ircsock.send('PRIVMSG ' + channel + " :" + rComList + "\n")
     f.close
+  #Looks for message .fortune and reads a random line from files/fortunes.txt to be sent.
   elif message.find('.fortune')!=-1:
     f = open('files/fortunes.txt')
     rFortune = random.choice(open('files/fortunes.txt').readlines())
     ircsock.send('PRIVMSG ' + channel + " :" + rFortune + "\n")
     f.close
+  #Looks for message .quote and reads a random line from files/quotes.txt to be sent.
   elif message.find('.quote')!=-1:
     f = open('files/quotes.txt')
     rQuotes = random.choice(open('files/quotes.txt').readlines())
@@ -72,10 +74,6 @@ def sendmsg(chan , msg):
 # Join a Channel
 def joinchan(chan):
   ircsock.send("JOIN "+ chan +"\n")
-
-# Responds to Users who say Hello
-def hello(): # This function responds to a user that inputs "Hello Euthumeo"
-  ircsock.send("PRIVMSG "+ channel +" :Hello!\n")
                   
 #######################################################
 ### Code
@@ -85,7 +83,7 @@ def hello(): # This function responds to a user that inputs "Hello Euthumeo"
 ircsock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 ircsock.connect((server, port)) # Here we connect to the server using the port 6667
 ircsock.send("NICK "+ botnick +"\n") # here we actually assign the nick to the bot
-ircsock.send('USER AffixBot AffixBot AffixBot :Affix IRC\r\n')
+ircsock.send('USER MushuBot MushuBot MushuBot MushuBot :Mushu IRC\r\n')
 # Sleep is required because IRC may not be able to keep up with the
 # information being sent, and will fail.
 # Sleeping requires a proper response, and you're able to join channel.
@@ -93,16 +91,14 @@ time.sleep(3)
 # Join Channel
 joinchan(channel) 
 
-while 1: 
-  ircmsg = ircsock.recv(2048) 
-  ircmsg = ircmsg.strip('\n\r') 
-  if ircmsg.find(' PRIVMSG ')!=-1:
-     nick=ircmsg.split('!')[0][1:]
-     channel=ircmsg.split(' PRIVMSG ')[-1].split(' :')[0]
-     commands(nick,channel,ircmsg)
-  if ircmsg.find(":Hello "+ botnick) != -1:
-    hello()
 
+while 1:
+  ircmsg = ircsock.recv(2048) 
+  ircmsg = ircmsg.strip('\n\r')
+  if ircmsg.find(' PRIVMSG ')!=-1:
+    nick=ircmsg.split('!')[0][1:]
+    channel=ircmsg.split(' PRIVMSG ')[-1].split(' :')[0]
+    commands(nick,channel,ircmsg) 
 # Responds if server pings. Keeps session active.
   if ircmsg.find("PING :") != -1:
     ping()
